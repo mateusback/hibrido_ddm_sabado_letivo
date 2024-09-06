@@ -1,10 +1,8 @@
-import 'package:flutter_p_2024/app/domain/entities/subject.dart';
-import 'package:flutter_p_2024/app/domain/exception/domain_layer_exception.dart';
-import 'package:flutter_p_2024/app/domain/interfaces/subject_dao.dart';
 import 'package:get_it/get_it.dart';
+import 'package:hibrido_ddm_sabado_letivo/app/domain/entities/Vertebrate.dart';
 import 'package:hibrido_ddm_sabado_letivo/app/domain/interfaces/i_vertabrate_dao.dart';
 
-class SubjectService {
+class VertebrateService {
   final _repository = GetIt.I.get<IVertabrateDao>();
 
   final minimumLength = 3;
@@ -12,7 +10,7 @@ class SubjectService {
   final minimumPeriod = 1;
   final maximumPeriod = 5;
 
-  save(Subject subject) {
+  save(Vertebrate subject) {
     validateAll(subject);
     _repository.save(subject);
   }
@@ -21,11 +19,11 @@ class SubjectService {
     _repository.remove(id);
   }
 
-  Future<List<Subject>> find() {
+  Future<List<Vertebrate>> find() {
     return _repository.find();
   }
 
-  validateAll(Subject subject) {
+  validateAll(Vertebrate subject) {
     validateName(subject.name);
     validateTeacher(subject.teacherName);
     validatePeriod(subject.period);
