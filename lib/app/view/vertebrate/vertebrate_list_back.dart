@@ -1,4 +1,6 @@
 import 'package:flutter/cupertino.dart';
+import 'package:hibrido_ddm_sabado_letivo/app/domain/entities/vertebrate.dart';
+import 'package:hibrido_ddm_sabado_letivo/app/domain/services/i_vertebrate_service.dart';
 import 'package:get_it/get_it.dart';
 import 'package:mobx/mobx.dart';
 
@@ -7,7 +9,7 @@ part 'vertebrate_list_back.g.dart';
 class VertebrateListBack = _VertebrateListBack with _$VertebrateListBack;
 
 abstract class _VertebrateListBack with Store {
-  var _service = GetIt.I.get<VertebrateService>();
+  var _service = GetIt.I.get<IVertebrateService>();
 
   @observable
   late Future<List<Vertebrate>> list;
@@ -21,20 +23,20 @@ abstract class _VertebrateListBack with Store {
     refreshList();
   }
 
-  goToForm(BuildContext context, [Subject? subject]) {
+  void goToForm(BuildContext context, [Vertebrate? vertebrate]) {
     Navigator.of(context)
-        .pushNamed(Routes.SUBJECT_FORM, arguments: subject)
-        .then(refreshList);
+        .pushNamed('/vertebrate_form', arguments: vertebrate)
+        .then((_) => refreshList());
   }
 
-  gotToDetails(BuildContext context, Subject subject) {
+  void goToDetails(BuildContext context, Vertebrate vertebrate) {
     Navigator.of(context)
-        .pushNamed(Routes.HOME, arguments: subject)
-        .then(refreshList);
+        .pushNamed('/vertebrate_details', arguments: vertebrate)
+        .then((_) => refreshList());
   }
 
-  remove(BuildContext context, dynamic subjectId) async {
-    await _service.remove(subjectId);
+  Future<void> remove(BuildContext context, dynamic vertebrateId) async {
+    await _service.remove(vertebrateId);
     refreshList();
     Navigator.of(context).pop();
   }

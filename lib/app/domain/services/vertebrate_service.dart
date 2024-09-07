@@ -1,65 +1,25 @@
 import 'package:get_it/get_it.dart';
-import 'package:hibrido_ddm_sabado_letivo/app/domain/entities/Vertebrate.dart';
+import 'package:hibrido_ddm_sabado_letivo/app/domain/entities/vertebrate.dart';
 import 'package:hibrido_ddm_sabado_letivo/app/domain/interfaces/i_vertabrate_dao.dart';
+import 'package:hibrido_ddm_sabado_letivo/app/domain/services/i_vertebrate_service.dart';
 
-class VertebrateService {
-  final _repository = GetIt.I.get<IVertabrateDao>();
+class VertebrateService implements IVertebrateService {
+  var _vertebrateDao = GetIt.I.get<IVertabrateDao>();
 
-  final minimumLength = 3;
-  final maximumLength = 50;
-  final minimumPeriod = 1;
-  final maximumPeriod = 5;
+  VertebrateService();
 
-  save(Vertebrate subject) {
-    validateAll(subject);
-    _repository.save(subject);
+  @override
+  Future<List<Vertebrate>> find() async {
+    return _vertebrateDao.find();
   }
 
-  remove(dynamic id) {
-    _repository.remove(id);
+  @override
+  Future<void> save(Vertebrate vertebrate) async {
+    await _vertebrateDao.save(vertebrate);
   }
 
-  Future<List<Vertebrate>> find() {
-    return _repository.find();
-  }
-
-  validateAll(Vertebrate subject) {
-    validateName(subject.name);
-    validateTeacher(subject.teacherName);
-    validatePeriod(subject.period);
-  }
-
-  validateName(String? name) {
-    if (name == null) {
-      throw DomainLayerException('O nome da matéria é obrigatório');
-    } else if (name.length < minimumLength) {
-      throw DomainLayerException(
-          'O nome da matéria deve ter mais de 3 caracteres');
-    } else if (name.length > maximumLength) {
-      throw DomainLayerException(
-          'O nome da matéria deve ter menos de 50 caracteres');
-    }
-  }
-
-  validateTeacher(String? teacher) {
-    if (teacher == null) {
-      throw DomainLayerException('O nome do professor é obrigatório');
-    } else if (teacher.length < minimumLength) {
-      throw DomainLayerException(
-          'O nome do professor deve ter mais de 3 caracteres');
-    } else if (teacher.length > maximumLength) {
-      throw DomainLayerException(
-          'O nome do professor deve ter menos de 50 caracteres');
-    }
-  }
-
-  validatePeriod(int? period) {
-    if (period == null) {
-      throw DomainLayerException('O ano da matéria é obrigatório');
-    } else if (period < minimumPeriod) {
-      throw DomainLayerException('O ano da matéria deve ser maior que 0');
-    } else if (period > maximumPeriod) {
-      throw DomainLayerException('O ano da matéria deve ser menor que 5');
-    }
+  @override
+  Future<void> remove(dynamic vertebrateId) async {
+    await _vertebrateDao.remove(vertebrateId);
   }
 }

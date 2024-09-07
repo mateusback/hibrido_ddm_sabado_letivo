@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:hibrido_ddm_sabado_letivo/app/navigation/routes.dart';
+import 'package:hibrido_ddm_sabado_letivo/app/view/home_page.dart';
+import 'package:hibrido_ddm_sabado_letivo/app/view/vertebrate/vertebrate_form.dart';
+import 'package:hibrido_ddm_sabado_letivo/app/view/vertebrate/vertebrate_list.dart';
+import 'package:hibrido_ddm_sabado_letivo/app/view/vertebrate/vertebrate_details.dart';
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -18,7 +20,13 @@ class MyApp extends StatelessWidget {
           foregroundColor: Colors.white,
         ),
       ),
-      routes: Routes.configRoutes(),
+      initialRoute: '/',
+      routes: {
+        '/': (context) => HomePage(),
+        '/vertebrate_form': (context) => VertebrateForm(),
+        '/vertebrate_list': (context) => VertebrateList(),
+        '/vertebrate_details': (context) => VertebrateDetails(),
+      },
     );
   }
 }

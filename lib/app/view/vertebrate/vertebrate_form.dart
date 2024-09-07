@@ -5,83 +5,52 @@ class VertebrateForm extends StatelessWidget {
   final _form = GlobalKey<FormState>();
 
   Widget fieldName(VertebrateFormBack back) {
-    var initValue = back.subject!.name;
+    var initValue = back.vertebrate!.nome;
     return TextFormField(
       validator: (String? value) => back.validateName(value!),
-      onSaved: (newValue) => back.subject!.name = newValue!,
+      onSaved: (newValue) => back.vertebrate!.nome = newValue!,
       initialValue: initValue ?? '',
-      decoration: const InputDecoration(labelText: 'Nome da Matéria'),
+      decoration: const InputDecoration(labelText: 'Nome do Vertebrado'),
     );
   }
 
-  Widget fieldTeacher(SubjectFormBack back) {
-    var initValue = back.subject!.teacherName;
+  Widget fieldSpecies(VertebrateFormBack back) {
+    var initValue = back.vertebrate!.especie;
     return TextFormField(
-      validator: (String? value) => back.validateTeacher(value!),
-      onSaved: (newValue) => back.subject!.teacherName = newValue!,
+      validator: (String? value) => back.validateSpecies(value!),
+      onSaved: (newValue) => back.vertebrate!.especie = newValue!,
       initialValue: initValue ?? '',
-      decoration: const InputDecoration(labelText: 'Nome do Professor'),
+      decoration: const InputDecoration(labelText: 'Espécie'),
     );
   }
 
-  Widget fieldPeriod(SubjectFormBack back) {
-    int? selectedPeriod = back.subject?.period;
-
-    return DropdownButtonFormField<int>(
-      value: selectedPeriod,
-      items: const [
-        DropdownMenuItem(
-          value: null,
-          child: Text(
-            'Selecione um item',
-            style: TextStyle(color: Colors.grey),
-          ),
-        ),
-        DropdownMenuItem(
-          value: 1,
-          child: Text('Primeiro Ano'),
-        ),
-        DropdownMenuItem(
-          value: 2,
-          child: Text('Segundo Ano'),
-        ),
-        DropdownMenuItem(
-          value: 3,
-          child: Text('Terceiro Ano'),
-        ),
-        DropdownMenuItem(
-          value: 4,
-          child: Text('Quarto Ano'),
-        ),
-      ],
-      onChanged: (int? newValue) {
-        if (newValue != null) {
-          selectedPeriod = newValue;
-        }
-      },
-      validator: (int? value) => back.validatePeriod((value!)),
-      onSaved: (newValue) => back.subject!.period = newValue,
-      decoration: const InputDecoration(labelText: 'Ano da Matéria'),
+  Widget fieldVertebralColumnType(VertebrateFormBack back) {
+    var initValue = back.vertebrate!.tipoColunaVertebral;
+    return TextFormField(
+      validator: (String? value) => back.validateVertebralColumnType(value!),
+      onSaved: (newValue) => back.vertebrate!.tipoColunaVertebral = newValue!,
+      initialValue: initValue ?? '',
+      decoration: const InputDecoration(labelText: 'Tipo de Coluna Vertebral'),
     );
   }
 
   @override
   Widget build(BuildContext context) {
-    var _back = SubjectFormBack(context);
+    var _back = VertebrateFormBack(context);
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Cadastro de Matéria'),
+        title: const Text('Cadastro de Vertebrado'),
         actions: [
           IconButton(
-              icon: Icon(Icons.save),
-              onPressed: () {
-                _form.currentState!.validate();
-                _form.currentState!.save();
-                if (_back.isValid) {
-                  _back.save(context);
-                  //BUG - ATUALIZAR A LISTA DEPOIS DE SALVAR
-                }
-              })
+            icon: Icon(Icons.save),
+            onPressed: () {
+              _form.currentState!.validate();
+              _form.currentState!.save();
+              if (_back.isValid) {
+                _back.save(context);
+              }
+            },
+          ),
         ],
       ),
       body: Padding(
@@ -91,8 +60,8 @@ class VertebrateForm extends StatelessWidget {
           child: Column(
             children: [
               fieldName(_back),
-              fieldTeacher(_back),
-              fieldPeriod(_back),
+              fieldSpecies(_back),
+              fieldVertebralColumnType(_back),
             ],
           ),
         ),

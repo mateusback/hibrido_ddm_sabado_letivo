@@ -1,11 +1,33 @@
-class Vertebrate {
-  late dynamic id;
-  late String? name;
-  late String? teacherName;
+import 'animal.dart';
 
-  Vertebrate({
-    this.id,
-    this.name,
-    this.teacherName,
-  });
+class Vertebrate extends Animal {
+  String tipoColunaVertebral;
+
+  Vertebrate(
+      {int? id,
+      String? nome,
+      int? idade,
+      String? especie,
+      this.tipoColunaVertebral = ''})
+      : super(id ?? 0, nome ?? '', idade ?? 0, especie ?? '');
+
+  Map<String, dynamic> toMap() {
+    return {
+      'id': id,
+      'nome': nome,
+      'idade': idade,
+      'especie': especie,
+      'tipoColunaVertebral': tipoColunaVertebral,
+    };
+  }
+
+  factory Vertebrate.fromMap(Map<String, dynamic> map) {
+    return Vertebrate(
+      id: map['id'],
+      nome: map['nome'],
+      idade: map['idade'],
+      especie: map['especie'],
+      tipoColunaVertebral: map['tipoColunaVertebral'],
+    );
+  }
 }

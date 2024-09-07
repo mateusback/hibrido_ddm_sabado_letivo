@@ -1,4 +1,4 @@
-import 'package:hibrido_ddm_sabado_letivo/app/domain/entities/Vertebrate.dart';
+import '../entities/vertebrate.dart';
 
 abstract class IVertabrateDao {
   Future<List<Vertebrate>> find();
